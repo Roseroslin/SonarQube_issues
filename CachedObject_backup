@@ -1,0 +1,53 @@
+package com.manulife.cmtravel.cache;
+
+import java.util.Calendar;
+import java.util.Date;
+
+public class CachedObject implements Cacheable
+{
+	private Date dateofExpiration = null;
+	private Object identifier = null;	
+	private String jsonText = "";
+
+	public CachedObject(String obj, Object id, int minutesToLive)
+	{
+		this.jsonText = obj;
+		this.identifier = id;		
+		if (minutesToLive != 0)
+		{
+			dateofExpiration = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dateofExpiration);
+			cal.add(Calendar.MINUTE, minutesToLive);
+			dateofExpiration = cal.getTime();
+		}
+	}
+
+	public boolean isExpired()
+	{		
+		if (dateofExpiration != null)
+		{			
+			if (dateofExpiration.before(new Date()))
+			{				
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else {
+			// This means it lives forever!
+			return false;
+		}
+	}
+
+	public Object getIdentifier()
+	{
+		return identifier;
+	}
+
+	public String getJsonText() {
+		return jsonText;
+	}
+}
