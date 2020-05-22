@@ -1,6 +1,0 @@
-package com.manulife.cmtravel.helpers;
-
-public interface Runnable {
-	public void run() ;
-
-}
